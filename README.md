@@ -1,40 +1,32 @@
-# Welcome to Remix!
+Event Planner
+(similar to partiful)
 
-- 📖 [Remix docs](https://remix.run/docs)
+Stack:
+Remix
+Typescript
+MUI
 
-## Development
+Express?
+Python
+Flask
 
-Run the dev server:
+Vercel
+MongoDB/Supabase
 
-```shellscript
-npm run dev
-```
+Front-End
+Register/Login
+As a logged in user - Make an event (set date, set location, set theme?, set title, set description, dress code?) 
+(connect theme to AI image generator - depending on admin selection will change background of the event)
+As a logged in user (admin for event) - Invite friends (email, messages, whatsapp?) - friends don’t need to login
+As a logged in user (admin for event) - 
+As a user - View event details
+As a user - RSVP to event
 
-## Deployment
+Back-End 
+Login Profiles
+Session storage(JWT)
+URL encoder (generator function)
+User roles (event specific)
+Routes (create event, delete event, invite, create profile, API endpoints for social media)
+Event Storage
 
-First, build your app for production:
-
-```sh
-npm run build
-```
-
-Then run the app in production mode:
-
-```sh
-npm start
-```
-
-Now you'll need to pick a host to deploy it to.
-
-### DIY
-
-If you're familiar with deploying Node applications, the built-in Remix app server is production-ready.
-
-Make sure to deploy the output of `npm run build`
-
-- `build/server`
-- `build/client`
-
-## Styling
-
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever css framework you prefer. See the [Vite docs on css](https://vitejs.dev/guide/features.html#css) for more information.
