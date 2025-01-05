@@ -1,4 +1,5 @@
-import type { MetaFunction } from "@remix-run/node";
+import { type MetaFunction } from "@remix-run/node";
+import { useNavigate } from "@remix-run/react";
 
 export const meta: MetaFunction = () => {
   return [
@@ -8,9 +9,16 @@ export const meta: MetaFunction = () => {
 };
 
 export default function Index() {
+  const navigate = useNavigate()
+
+  const handleCreateEvent = () => {
+    navigate('/create')
+  }
+
   return (
     <div>
       <h1>Event Planner!</h1>
+      <button onClick={handleCreateEvent}>Create event</button>
     </div>
   );
 }

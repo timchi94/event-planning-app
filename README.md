@@ -34,7 +34,7 @@ Pages:
 - login/register
 - homepage (if logged in can create an event, if not logged in -- prompted to create an account before creating an event)
 - create event page
-    - create/uuid
+    - create
 - event details page (unique id for event) - admin can edit/share event from this page, invitees can rsvp from this page
     - event/uuid
 - profile (view past events, view upcoming events) -- if logged in only
