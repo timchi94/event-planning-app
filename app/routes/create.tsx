@@ -27,22 +27,24 @@ export const action = async ({ request }: { request: Request }) => {
 
 const CreateEvent = () => {
     return (
-        <div>
-            <h1>New Event</h1>
+        <div className="p-8 w-screen min-h-screen bg-yellow-200">
+            <h1 className="text-2xl font-bold pb-4 text-gray-800">New Event</h1>
             <Form method='post'>
-                <div>
-                    <label htmlFor="title">Event Title: </label>
-                    <input type="text" name="title" id="title" />
+                <div className="flex flex-col gap-1 py-4">
+                    <label htmlFor="title" className="text-gray-800">Event Title: </label>
+                    <input type="text" name="title" id="title" className="py-2 px-2 rounded-xl outline-none text-sm" placeholder="Tim's Birthday Party" />
                 </div>
-                <div>
-                    <label htmlFor="description">Event Description: </label>
-                    <input type="text" name="description" id="description" />
+                <div className="flex flex-col gap-1 py-4">
+                    <label htmlFor="description" className="text-gray-800">Event Description: </label>
+                    <textarea name="description" id="description" className="py-2 px-2 rounded-xl outline-none text-sm h-20 align-top resize-none" placeholder="Beer tasting at local microbrewery..."></textarea>
                 </div>
-                <div>
-                    <label htmlFor="date">Event Date: </label>
-                    <input type="date" name="date" id="date" />
+                <div className="flex flex-col gap-1 py-4">
+                    <label htmlFor="date" className="text-gray-800">Event Date: </label>
+                    <input type="date" name="date" id="date" className="py-2 px-2 rounded-xl outline-none text-sm" />
                 </div>
-                <button type="submit">Create!</button>
+                <div className="flex items-center justify-center py-8">
+                    <button type="submit" className="text-gray-800 bg-gray-200 py-2 px-4 rounded-2xl hover:cursor-pointer hover:bg-gray-800 hover:text-gray-200 text-3xl">Create!</button>
+                </div>
             </Form>
         </div>
     )
