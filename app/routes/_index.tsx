@@ -14,11 +14,15 @@ export default function Index() {
   const handleCreateEvent = () => {
     navigate('/create')
   }
+  const handleProfile = () => {
+    navigate('/profile')
+  }
 
   return (
     <div>
       <h1>Event Planner!</h1>
       <button onClick={handleCreateEvent}>Create event</button>
+      <button onClick={handleProfile}>Go to Profile</button>
     </div>
   );
 }
