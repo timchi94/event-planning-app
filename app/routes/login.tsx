@@ -1,8 +1,8 @@
-import { supabase } from "~/supabase.server";
+import { supabaseClient } from "~/supabase.client";
 
 export default function LoginPage() {
   const handleLogin = async () => {
-    const { data, error } = await supabase.auth.signInWithOAuth({
+    const { data, error } = await supabaseClient.auth.signInWithOAuth({
       provider: "google",
       options: {
         redirectTo: "https://event-planning-app-nu.vercel.app/auth/google/callback",
