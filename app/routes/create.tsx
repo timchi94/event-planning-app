@@ -1,5 +1,7 @@
 import { Form } from "@remix-run/react"
 import letter from '../assets/letter-opening.gif'
+import { supabase } from "~/supabase.server"
+import { v4 as uuidv4 } from "uuid"
 
 export const loader = async () => {
     return true
@@ -7,20 +9,34 @@ export const loader = async () => {
 
 export const action = async ({ request }: { request: Request }) => {
     const formData = await request.formData()
-    const { title, description, date } = Object.fromEntries(formData) as {
+    const { title, description, date, location } = Object.fromEntries(formData) as {
         title: string
         description: string
         date: string
+        location: string
     }
-    if (!title || !description || !date) {
-        return Response.json({ Error: "Title, description and date of event are required" })
+
+    if (!title || !description || !date || !location) {
+        return Response.json({ Error: "Title, description, date, and location of event are required" }, { status: 405 })
     }
+
     const newEvent = {
+        event_id: uuidv4(),
+        user_id: 1,
+        // TODO user id needs to be programmatically determines based on cookies?
         title,
         description,
-        date
+        date,
+        location
     }
-    console.log('success')
+    const { error } = await supabase
+        .from('events')
+        .insert(newEvent)
+
+    if (error) {
+        return Response.json({ Error: 'Error inserting event into database' }, { status: 500 })
+    }
+
     return Response.json({ newEvent }, { status: 200 })
 }
 
@@ -42,6 +58,10 @@ const CreateEvent = () => {
                         <div className="flex flex-col gap-1 py-4 md:gap-2">
                             <label htmlFor="date" className="text-gray-800 md:text-lg">Event Date: </label>
                             <input type="date" name="date" id="date" className="p-2 rounded-xl outline-none text-sm md:text-lg md:p-4" />
+                        </div>
+                        <div className="flex flex-col gap-1 py-4 md:gap-2">
+                            <label htmlFor="location" className="text-gray-800 md:text-lg">Event Location: </label>
+                            <input type="text" name="location" id="location" className="p-2 rounded-xl outline-none text-sm md:text-lg md:p-4" />
                         </div>
                         <div className="flex items-center justify-center py-8">
                             <button type="submit" className="text-gray-800 bg-gray-200 py-2 px-4 rounded-2xl hover:cursor-pointer hover:bg-gray-800 hover:text-gray-200 text-xl font-serif md:text-3xl md:py-4 md:px-8">Create!</button>
