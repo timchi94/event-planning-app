@@ -31,14 +31,15 @@ export const action = async ({ request }: { request: Request }) => {
     }
 
     console.log(newEvent)
+    console.log(date)
 
-    const { error } = await supabase
-        .from('events')
-        .insert(newEvent)
+    // const { error } = await supabase
+    //     .from('events')
+    //     .insert(newEvent)
 
-    if (error) {
-        return Response.json({ Error: 'Error inserting event into database' }, { status: 500 })
-    }
+    // if (error) {
+    //     return Response.json({ Error: 'Error inserting event into database' }, { status: 500 })
+    // }
 
     return Response.json({ newEvent }, { status: 200 })
 }
