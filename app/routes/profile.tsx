@@ -2,7 +2,7 @@ import { useLoaderData } from "@remix-run/react";
 import { supabase } from "~/supabase.server";
 
 export const loader = async () => {
-  const { data, error } = await supabase.from("timothy-chiu-supabase").select("*");
+  const { data, error } = await supabase.from("users").select("*");
   if (error) {
     throw new Error(error.message);
   }
