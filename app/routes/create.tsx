@@ -29,6 +29,9 @@ export const action = async ({ request }: { request: Request }) => {
         date,
         location
     }
+
+    console.log(newEvent)
+
     const { error } = await supabase
         .from('events')
         .insert(newEvent)
