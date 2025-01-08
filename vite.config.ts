@@ -20,6 +20,5 @@ export default defineConfig({
       },
     }),
     tsconfigPaths(),
-  ],
-  envPrefix: 'VITE_PUBLIC'
+  ]
 });
