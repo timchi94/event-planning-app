@@ -13,3 +13,4 @@ export default function Profile() {
   const data = useLoaderData();
   return <pre>{JSON.stringify(data, null, 2)}</pre>;
 }
+
