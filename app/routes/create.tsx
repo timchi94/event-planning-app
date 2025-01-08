@@ -1,5 +1,4 @@
 import { Form } from "@remix-run/react"
-import { createEvent } from "server"
 import letter from '../assets/letter-opening.gif'
 
 export const loader = async () => {
@@ -21,7 +20,6 @@ export const action = async ({ request }: { request: Request }) => {
         description,
         date
     }
-    createEvent(newEvent)
     console.log('success')
     return Response.json({ newEvent }, { status: 200 })
 }
