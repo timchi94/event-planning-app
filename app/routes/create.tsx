@@ -1,10 +1,27 @@
-import { Form } from "@remix-run/react"
+import { Form, useActionData, useNavigate } from "@remix-run/react"
+
 import letter from '../assets/letter-opening.gif'
 import { supabase } from "~/supabase.server"
+import { useEffect } from "react"
 import { v4 as uuidv4 } from "uuid"
+
+interface Event {
+    event_id: string
+    created_by: number
+    title: string
+    description: string
+    date: string
+    location: string
+}
+
+interface ActionData {
+    error?: string
+    newEvent?: Event
+}
 
 export const loader = async () => {
     return true
+    //TODO is this necessary? how do we fix this loader function so that it is more effective
 }
 
 export const action = async ({ request }: { request: Request }) => {
@@ -42,6 +59,15 @@ export const action = async ({ request }: { request: Request }) => {
 }
 
 const CreateEvent = () => {
+    const actionData = useActionData<ActionData>()
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if (actionData?.newEvent) {
+            navigate(`event/${actionData.newEvent.event_id}`)
+        }
+    }, [actionData])
+
     return (
         <div className="bg-green-100">
             <div className="py-8 mx-8 min-h-screen md:py-12 md:mx-12 xl:w-desktop xl:mx-auto">
