@@ -6,6 +6,12 @@ export default {
     width: {
       desktop: '72rem'
     },
+    colors: {
+      greenPrimary: '#D1FAE5',
+      pinkPrimary: '#ED6D8B',
+      grayPrimary: '#1F2937',
+      graySecondary: '#E5E7EB'
+    },
     extend: {
       fontFamily: {
         serif: [

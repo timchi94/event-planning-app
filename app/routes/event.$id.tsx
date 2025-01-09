@@ -29,8 +29,10 @@ const EventDetails = () => {
     const event = useLoaderData<Event>()
 
     return (
-        <div>
-            <h1 className="text-xl">{event.title}</h1>
+        <div className="bg-pinkPrimary">
+            <div className="py-8 mx-8 min-h-screen md:py-12 md:mx-12 xl:w-desktop xl:mx-auto">
+                <h1 className="text-4xl font-bold pb-4 text-grayPrimary font-serif md:text-5xl md:pb-8">{event.title}</h1>
+            </div>
         </div>
     )
 }
