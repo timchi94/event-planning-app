@@ -64,7 +64,7 @@ const CreateEvent = () => {
 
     useEffect(() => {
         if (actionData?.newEvent) {
-            navigate(`event/${actionData.newEvent.event_id}`)
+            navigate(`/event/${actionData.newEvent.event_id}`)
         }
     }, [actionData])
 
