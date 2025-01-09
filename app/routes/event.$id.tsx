@@ -1,4 +1,4 @@
-import { ProfileIcon } from "~/components/profileIcon"
+import { ProfileIcon } from "~/components/ProfileIcon"
 import { supabase } from "~/supabase.server"
 import { useLoaderData } from "@remix-run/react"
 
