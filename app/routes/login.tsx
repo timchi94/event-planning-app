@@ -1,23 +1,18 @@
-import { supabaseClient } from "~/supabase.client";
+import { supabase } from "~/supabase.server";
+
+export let loader = async ({ request }: LoaderFunctionArgs) => {
+  const { headers, session } = await getSupabaseWithSessionHeaders({
+    request,
+  });
+
+  if (session) {
+    return redirect('/', { headers });
+  }
+
+  return json({ success: true }, { headers });
+};
 
 export default function LoginPage() {
-  const handleLogin = async () => {
-    const { data, error } = await supabaseClient.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        redirectTo: "https://event-planning-app-nu.vercel.app/auth/google/callback",
-      },
-    });
-
-    if (error) {
-      console.error("Error during sign-in:", error.message);
-      return;
-    }
-
-    if (data.url) {
-      window.location.href = data.url;
-    }
-  };
 
   return (
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: "50px" }}>

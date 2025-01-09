@@ -1,6 +1,6 @@
 import { ActionFunction, redirect } from "@remix-run/node";
 
-import { supabase } from "~/supabase.client";
+import { supabase } from "~/supabase.server";
 
 export const action: ActionFunction = async ({ request }) => {
   const { url } = await supabase.auth.signInWithOAuth({
