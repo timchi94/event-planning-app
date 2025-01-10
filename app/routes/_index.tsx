@@ -75,11 +75,16 @@ export default function Index() {
     navigate("/profile");
   };
 
+  const handleLogin = () => {
+    navigate("/login")
+  }
+
   return (
     <div>
       <h1>Event Planner!</h1>
       <button onClick={handleCreateEvent}>Create Event</button>
       <button onClick={handleProfile}>Go to Profile</button>
+      <button onClick={handleLogin}>Go to Profile</button>
     </div>
   );
 }

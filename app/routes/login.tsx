@@ -1,6 +1,6 @@
 import { type LoaderFunctionArgs } from '@remix-run/node';
 import { getSupabaseWithSessionHeaders } from '~/supabase.server';
-import { redirect } from '@remix-run/node';
+import { redirect } from '@remix-run/node';  // Only import `redirect` now
 
 export let loader = async ({ request }: LoaderFunctionArgs) => {
   const { headers, session } = await getSupabaseWithSessionHeaders({
@@ -11,7 +11,13 @@ export let loader = async ({ request }: LoaderFunctionArgs) => {
     return redirect('/', { headers });
   }
 
-  return Response.json({ success: true }, { headers });
+  // Use the standard Response.json method
+  return new Response(JSON.stringify({ success: true }), {
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json', // Make sure to set Content-Type header
+    },
+  });
 };
 
 export default function LoginPage() {
@@ -46,5 +52,7 @@ export default function LoginPage() {
     </div>
   );
 }
+
+
 
 
