@@ -1,7 +1,7 @@
 import { redirect, type LoaderFunctionArgs } from '@remix-run/node'
 import { createServerClient, parseCookieHeader, serializeCookieHeader } from '@supabase/ssr'
 import { useLoaderData } from '@remix-run/react'
-
+import { useNavigate } from '@remix-run/react';
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const requestUrl = new URL(request.url)
@@ -34,4 +34,10 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
   // return the user to an error page with instructions
   return redirect('/auth/auth-code-error', { headers })
+}
+
+export default function CallbackPage() {
+  const navigate = useNavigate();
+
+  return <div>Loading...</div>;
 }
