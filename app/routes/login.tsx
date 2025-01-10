@@ -1,6 +1,8 @@
 import { type LoaderFunctionArgs } from '@remix-run/node';
 import { getSupabaseWithSessionHeaders } from '~/supabase.server';
 import { redirect } from '@remix-run/node';  // Only import `redirect` now
+import { useLoaderData } from "@remix-run/react";
+import { createBrowserClient } from "@supabase/ssr";
 
 export let loader = async ({ request }: LoaderFunctionArgs) => {
   const { headers, session } = await getSupabaseWithSessionHeaders({
@@ -21,6 +23,10 @@ export let loader = async ({ request }: LoaderFunctionArgs) => {
 };
 
 export default function LoginPage() {
+  const { SUPABASE_URL, SUPABASE_ANON_KEY } = useLoaderData();
+
+  const supabase = createBrowserClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
   const handleLogin = async () => {
     try {
       const { error } = await supabase.auth.signInWithOAuth({
