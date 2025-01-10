@@ -1,60 +1,58 @@
 import { type MetaFunction } from "@remix-run/node";
-import { useNavigate } from "@remix-run/react";
-import { createServerClient, parseCookieHeader, serializeCookieHeader } from '@supabase/ssr'
-import { type LoaderFunctionArgs } from '@remix-run/node'
-import { useLoaderData } from "@remix-run/react";
+import { useNavigate, useLoaderData } from "@remix-run/react";
+import { createServerClient, parseCookieHeader, serializeCookieHeader } from "@supabase/ssr";
 import { createBrowserClient } from "@supabase/ssr";
 import { getEnvironmentVariables } from "~/supabase.server";
-
-export async function loader() {
-  // Fetch environment variables to pass to the client
-  const env = await getEnvironmentVariables();
-
-  return Response.json({ env });
-}
+import { type LoaderFunctionArgs, json } from "@remix-run/node";
 
 export async function loader({ request }: LoaderFunctionArgs) {
-  const headers = new Headers()
+  const headers = new Headers();
 
-  const supabase = createServerClient(process.env.SUPABASE_URL!, process.env.SUPABASE_ANON_KEY!, {
-    cookies: {
-      getAll() {
-        return parseCookieHeader(request.headers.get('Cookie') ?? '')
+  const supabase = createServerClient(
+    process.env.SUPABASE_URL!,
+    process.env.SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        getAll() {
+          return parseCookieHeader(request.headers.get("Cookie") ?? "");
+        },
+        setAll(cookiesToSet) {
+          cookiesToSet.forEach(({ name, value, options }) =>
+            headers.append("Set-Cookie", serializeCookieHeader(name, value, options))
+          );
+        },
       },
-      setAll(cookiesToSet) {
-        cookiesToSet.forEach(({ name, value, options }) =>
-          headers.append('Set-Cookie', serializeCookieHeader(name, value, options))
-        )
-      },
-    },
-  })
+    }
+  );
 
-  return new Response('...', {
-    headers,
-  })
+  // Get environment variables to pass to the client
+  const env = await getEnvironmentVariables();
+
+  return json({ env }, { headers });
 }
 
-export async function action({ request }: ActionFunctionArgs) {
-  const headers = new Headers()
+export async function action({ request }: LoaderFunctionArgs) {
+  const headers = new Headers();
 
-  const supabase = createServerClient(process.env.SUPABASE_URL!, process.env.SUPABASE_ANON_KEY!, {
-    cookies: {
-      getAll() {
-        return parseCookieHeader(request.headers.get('Cookie') ?? '')
+  const supabase = createServerClient(
+    process.env.SUPABASE_URL!,
+    process.env.SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        getAll() {
+          return parseCookieHeader(request.headers.get("Cookie") ?? "");
+        },
+        setAll(cookiesToSet) {
+          cookiesToSet.forEach(({ name, value, options }) =>
+            headers.append("Set-Cookie", serializeCookieHeader(name, value, options))
+          );
+        },
       },
-      setAll(cookiesToSet) {
-        cookiesToSet.forEach(({ name, value, options }) =>
-          headers.append('Set-Cookie', serializeCookieHeader(name, value, options))
-        )
-      },
-    },
-  })
+    }
+  );
 
-  return new Response('...', {
-    headers,
-  })
+  return new Response("Action executed", { headers });
 }
-
 
 export const meta: MetaFunction = () => {
   return [
@@ -64,22 +62,23 @@ export const meta: MetaFunction = () => {
 };
 
 export default function Index() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { env } = useLoaderData<typeof loader>();
 
-  const supabase = createBrowserClient(env.SUPABASE_URL!, env.SUPABASE_ANON_KEY!);
+  const supabase = createBrowserClient(env.SUPABASE_URL, env.SUPABASE_ANON_KEY);
 
   const handleCreateEvent = () => {
-    navigate('/create')
-  }
+    navigate("/create");
+  };
+
   const handleProfile = () => {
-    navigate('/profile')
-  }
+    navigate("/profile");
+  };
 
   return (
     <div>
       <h1>Event Planner!</h1>
-      <button onClick={handleCreateEvent}>Create event</button>
+      <button onClick={handleCreateEvent}>Create Event</button>
       <button onClick={handleProfile}>Go to Profile</button>
     </div>
   );
