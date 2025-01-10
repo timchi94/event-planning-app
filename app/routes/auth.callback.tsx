@@ -9,10 +9,10 @@ export async function loader({ request }: LoaderFunctionArgs) {
   const next = requestUrl.searchParams.get('next') || '/'
   const headers = new Headers()
 
-  const { SUPABASE_URL, SUPABASE_ANON_KEY } = useLoaderData();
 
   if (code) {
-    const supabase = createServerClient(process.env.SUPABASE_URL!, process.env.SUPABASE_ANON_KEY!, {
+    const { SUPABASE_URL, SUPABASE_ANON_KEY } = useLoaderData();
+    const supabase = createServerClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
       cookies: {
         getAll() {
           return parseCookieHeader(request.headers.get('Cookie') ?? '')
