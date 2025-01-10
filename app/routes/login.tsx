@@ -1,4 +1,6 @@
-import { supabase } from "~/supabase.server";
+import { type LoaderFunctionArgs } from '@remix-run/node'
+import { supabase, getSupabaseWithSessionHeaders, getSupabaseWithHeaders } from "~/supabase.server";
+
 
 export let loader = async ({ request }: LoaderFunctionArgs) => {
   const { headers, session } = await getSupabaseWithSessionHeaders({
@@ -12,7 +14,27 @@ export let loader = async ({ request }: LoaderFunctionArgs) => {
   return json({ success: true }, { headers });
 };
 
+
+
 export default function LoginPage() {
+  const handleLogin = async () => {
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google', 
+        options: {
+          redirectTo: `https://event-planning-app-nu.vercel.app/auth/callback`, // Ensure this matches your Supabase OAuth redirect URI
+        },
+      });
+
+      if (error) {
+        console.error('Error during login:', error.message);
+        alert('Login failed. Please try again.');
+      }
+    } catch (err) {
+      console.error('Unexpected error during login:', err);
+      alert('Something went wrong. Please try again.');
+    }
+  };
 
   return (
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: "50px" }}>
