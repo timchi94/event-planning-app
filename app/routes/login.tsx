@@ -1,6 +1,6 @@
-import { type LoaderFunctionArgs } from '@remix-run/node'
-import { getSupabaseWithSessionHeaders } from "~/supabase.server";
-
+import { type LoaderFunctionArgs } from '@remix-run/node';
+import { getSupabaseWithSessionHeaders } from '~/supabase.server';
+import { redirect } from '@remix-run/node';
 
 export let loader = async ({ request }: LoaderFunctionArgs) => {
   const { headers, session } = await getSupabaseWithSessionHeaders({
@@ -11,19 +11,17 @@ export let loader = async ({ request }: LoaderFunctionArgs) => {
     return redirect('/', { headers });
   }
 
-  return json({ success: true }, { headers });
+  return Response.json({ success: true }, { headers });
 };
 
-
-
-
 export default function LoginPage() {
-   const handleLogin = async () => {
+  const handleLogin = async () => {
     try {
       const { error } = await supabase.auth.signInWithOAuth({
-        provider: 'google', 
+        provider: 'google',
         options: {
-          redirectTo: `https://event-planning-app-nu.vercel.app/auth/callback`, },
+          redirectTo: `https://event-planning-app-nu.vercel.app/auth/callback`,
+        },
       });
 
       if (error) {
@@ -37,14 +35,16 @@ export default function LoginPage() {
   };
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: "50px" }}>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '50px' }}>
       <h1>Login</h1>
       <button
         onClick={handleLogin}
-        style={{ padding: "10px 20px", fontSize: "16px", cursor: "pointer" }}
+        style={{ padding: '10px 20px', fontSize: '16px', cursor: 'pointer' }}
       >
         Login with Google
       </button>
     </div>
   );
 }
+
+
