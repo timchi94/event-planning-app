@@ -1,11 +1,8 @@
 import { createClient } from "@supabase/supabase-js";
 import { createServerClient, parseCookieHeader, serializeCookieHeader } from '@supabase/ssr';
 
-
-
 const supabaseUrl = process.env.SUPABASE_URL || "";
 const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY || "";
-
 
 export function getSupabaseWithHeaders({ request }: { request: Request }) {
   const headers = new Headers();
@@ -16,11 +13,12 @@ export function getSupabaseWithHeaders({ request }: { request: Request }) {
     {
       cookies: {
         getAll() {
-          return parseCookieHeader(request.headers.get('Cookie') ?? '')
+          return parseCookieHeader(request.headers.get('Cookie') ?? '');
         },
         setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value, options }) =>
-          headers.append('Set-Cookie', serializeCookieHeader(name, value, options));
+          cookiesToSet.forEach(({ name, value, options }) => {
+            headers.append('Set-Cookie', serializeCookieHeader(name, value, options));
+          });
         },
       },
       auth: {
@@ -31,7 +29,7 @@ export function getSupabaseWithHeaders({ request }: { request: Request }) {
   );
 
   return { supabase, headers };
-};
+}
 
 export async function getSupabaseWithSessionHeaders({
   request,
@@ -47,9 +45,5 @@ export async function getSupabaseWithSessionHeaders({
 
   return { session, headers, supabase };
 }
-
-
-
-
 
 export const supabase = createClient(supabaseUrl, supabaseServiceRoleKey);
