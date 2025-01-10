@@ -4,7 +4,14 @@ import { createServerClient, parseCookieHeader, serializeCookieHeader } from '@s
 import { type LoaderFunctionArgs } from '@remix-run/node'
 import { useLoaderData } from "@remix-run/react";
 import { createBrowserClient } from "@supabase/ssr";
+import { getEnvironmentVariables } from "~/supabase.server";
 
+export async function loader() {
+  // Fetch environment variables to pass to the client
+  const env = await getEnvironmentVariables();
+
+  return Response.json({ env });
+}
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const headers = new Headers()

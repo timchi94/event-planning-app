@@ -3,13 +3,14 @@ import { createServerClient, parseCookieHeader, serializeCookieHeader } from '@s
 
 const supabaseUrl = process.env.SUPABASE_URL || "";
 const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY || "";
+const supabaseAnonKey = process.env.SUPABASE_ANON_KEY || "";
 
 export function getSupabaseWithHeaders({ request }: { request: Request }) {
   const headers = new Headers();
 
   const supabase = createServerClient(
-    process.env.SUPABASE_URL!,
-    process.env.SUPABASE_ANON_KEY!,
+    supabaseUrl,
+    supabaseAnonKey,
     {
       cookies: {
         getAll() {
@@ -47,3 +48,12 @@ export async function getSupabaseWithSessionHeaders({
 }
 
 export const supabase = createClient(supabaseUrl, supabaseServiceRoleKey);
+
+// Function to pass environment variables to client
+export async function getEnvironmentVariables() {
+  return {
+    SUPABASE_URL: supabaseUrl,
+    SUPABASE_ANON_KEY: supabaseAnonKey, // Only pass anon key for client usage
+  };
+}
+
