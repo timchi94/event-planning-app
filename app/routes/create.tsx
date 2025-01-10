@@ -73,7 +73,7 @@ const CreateEvent = () => {
             <div className="py-8 mx-8 min-h-screen md:py-12 md:mx-12 xl:w-desktop xl:mx-auto">
                 <h1 className="text-4xl font-bold pb-4 text-grayPrimary font-serif md:text-5xl md:pb-8">New Event</h1>
                 <div className="md:flex md:gap-8 md:items-start md:justify-between">
-                    <Form method='post' className="md:flex-grow">
+            <Form method='post' className="md:flex-grow">
                         <div className="flex flex-col gap-1 py-4 md:gap-2">
                             <label htmlFor="title" className="text-grayPrimary md:text-lg">Event Title: </label>
                             <input type="text" name="title" id="title" className="p-2 rounded-xl outline-none text-sm md:text-lg md:p-4" placeholder="Tim's Birthday Party" />

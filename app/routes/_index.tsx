@@ -80,11 +80,17 @@ export default function Index() {
   }
 
   return (
-    <div>
-      <h1>Event Planner!</h1>
-      <button onClick={handleCreateEvent}>Create Event</button>
-      <button onClick={handleProfile}>Go to Profile</button>
-      <button onClick={handleLogin}>Go to Login</button>
+    <div className="bg-greenPrimary">
+      <div className="py-8 mx-8 min-h-screen md:py-12 md:mx-12 xl:w-desktop xl:mx-auto">
+        <div>
+          <h1 className="text-4xl font-bold pb-4 text-grayPrimary font-serif md:text-5xl md:pb-8">Event Planner!</h1>
+            <div className="w-screen flex justify-evenly">
+              <button className="px-4 py-2 rounded shadow-md transition-shadow duration-300 hover:shadow-lg" onClick={handleCreateEvent}>Create Event</button>
+              <button className="px-4 py-2 rounded shadow-md transition-shadow duration-300 hover:shadow-lg" onClick={handleProfile}>Go to Profile</button>
+              <button className="px-4 py-2 rounded shadow-md transition-shadow duration-300 hover:shadow-lg" onClick={handleLogin}>Go to Login</button>
+            </div>
+        </div>
+      </div>
     </div>
   );
 }
