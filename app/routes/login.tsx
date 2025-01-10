@@ -1,5 +1,5 @@
 import { type LoaderFunctionArgs } from '@remix-run/node'
-import { supabase, getSupabaseWithSessionHeaders, getSupabaseWithHeaders } from "~/supabase.server";
+import { getSupabaseWithSessionHeaders } from "~/supabase.server";
 
 
 export let loader = async ({ request }: LoaderFunctionArgs) => {
@@ -16,14 +16,14 @@ export let loader = async ({ request }: LoaderFunctionArgs) => {
 
 
 
+
 export default function LoginPage() {
-  const handleLogin = async () => {
+   const handleLogin = async () => {
     try {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google', 
         options: {
-          redirectTo: `https://event-planning-app-nu.vercel.app/auth/callback`, // Ensure this matches your Supabase OAuth redirect URI
-        },
+          redirectTo: `https://event-planning-app-nu.vercel.app/auth/callback`, 
       });
 
       if (error) {

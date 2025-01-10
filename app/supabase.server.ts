@@ -31,7 +31,7 @@ export function getSupabaseWithHeaders({ request }: { request: Request }) {
   );
 
   return { supabase, headers };
-}
+};
 
 export async function getSupabaseWithSessionHeaders({
   request,
