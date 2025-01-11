@@ -1,6 +1,7 @@
 import { ProfileIcon } from "~/components/ProfileIcon"
 import { supabase } from "~/supabase.server"
 import { useLoaderData } from "@remix-run/react"
+import { useState } from "react"
 
 interface Users {
     name: string
@@ -52,6 +53,7 @@ export const loader = async ({ params }: { params: { id: string } }) => {
 
 const EventDetails = () => {
     const event = useLoaderData<Event>()
+    const [inviteePanelIsOpen, setInviteePanelIsOpen] = useState(false)
 
     function formatDate(dateString: string) {
         const date = new Date(dateString)
@@ -81,11 +83,24 @@ const EventDetails = () => {
                     <div className="flex items-center">
                         <p className="text-grayPrimary md:text-lg min-w-24 md:min-w-32">Attendees</p>
                         {event.invitees.map((invitee) => (
-                            <div className="bg-greenPrimary rounded-full w-8 h-8 md:h-10 md:w-10 flex items-center justify-center" >
+                            <div key={invitee.guest_id} className="bg-greenPrimary rounded-full w-8 h-8 md:h-10 md:w-10 flex items-center justify-center" >
                                 <p className="text-grayPrimary">{invitee.guests.guest_name[0].toUpperCase()}</p>
                             </div>
                         ))}
                     </div>
+                    {inviteePanelIsOpen ? (
+                        <div className="bg-graySecondary">
+                            <div className="flex">
+                                <p className="w-10">Guest</p>
+                                <p className="w-10">RSVP</p>
+                            </div>
+                            {event.invitees.map((invitee) => (
+                                <div key={invitee.guest_id} className="flex"></div>
+                            ))}
+                        </div>
+                    ) : (
+                        ''
+                    )}
                 </div>
             </div>
         </div>
