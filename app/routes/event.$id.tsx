@@ -55,11 +55,15 @@ const EventDetails = () => {
     const event = useLoaderData<Event>()
     const [inviteePanelIsOpen, setInviteePanelIsOpen] = useState(false)
 
-    function formatDate(dateString: string) {
+    const formatDate = (dateString: string) => {
         const date = new Date(dateString)
         const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
         const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
         return `${daysOfWeek[date.getDay()]}, ${months[date.getMonth()]} ${date.getDate()}`
+    }
+
+    const openInviteePanel = () => {
+        setInviteePanelIsOpen((prev) => !prev)
     }
 
     return (
@@ -80,7 +84,7 @@ const EventDetails = () => {
                             )}
                         </div>
                     </div>
-                    <div className="flex items-center">
+                    <div className="flex items-center" onClick={openInviteePanel}>
                         <p className="text-grayPrimary md:text-lg min-w-24 md:min-w-32">Attendees</p>
                         {event.invitees.map((invitee) => (
                             <div key={invitee.guest_id} className="bg-greenPrimary rounded-full w-8 h-8 md:h-10 md:w-10 flex items-center justify-center" >
@@ -92,10 +96,13 @@ const EventDetails = () => {
                         <div className="bg-graySecondary">
                             <div className="flex">
                                 <p className="w-10">Guest</p>
-                                <p className="w-10">RSVP</p>
+                                <p className="w-8">RSVP</p>
                             </div>
                             {event.invitees.map((invitee) => (
-                                <div key={invitee.guest_id} className="flex"></div>
+                                <div key={invitee.guest_id} className="flex">
+                                    <p className="w-10">{invitee.guests.guest_name}</p>
+                                    <p className="w-8">{invitee.confirmation === null ? "Waiting for confirmation" : invitee.confirmation === true ? "Going" : "Not going"}</p>
+                                </div>
                             ))}
                         </div>
                     ) : (
