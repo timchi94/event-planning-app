@@ -1,9 +1,7 @@
-import { type MetaFunction } from "@remix-run/node";
 import { useNavigate, useLoaderData } from "@remix-run/react";
-import { createServerClient, parseCookieHeader, serializeCookieHeader } from "@supabase/ssr";
-import { createBrowserClient } from "@supabase/ssr";
+import { createServerClient, parseCookieHeader, serializeCookieHeader,createBrowserClient } from "@supabase/ssr";
 import { getEnvironmentVariables } from "~/supabase.server";
-import { type LoaderFunctionArgs, json } from "@remix-run/node";
+import { type LoaderFunctionArgs, redirect, type MetaFunction } from "@remix-run/node";
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const headers = new Headers();
@@ -25,10 +23,27 @@ export async function loader({ request }: LoaderFunctionArgs) {
     }
   );
 
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+
+  if (session) {
+    // Redirect to the profile page if a session is active
+    return redirect("/profile");
+  }
+
   // Get environment variables to pass to the client
   const env = await getEnvironmentVariables();
 
-  return json({ env }, { headers });
+  return new Response(
+    JSON.stringify({ env }),
+    {
+      headers: {
+        ...Object.fromEntries(headers.entries()),
+        "Content-Type": "application/json",
+      },
+    }
+  );
 }
 
 export async function action({ request }: LoaderFunctionArgs) {
