@@ -9,7 +9,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     {
       cookies: {
         getAll() {
-          return request.headers.get("Cookie") ?? "";
+          return parse(request.headers.get("Cookie") ?? "");
         },
       },
     }
