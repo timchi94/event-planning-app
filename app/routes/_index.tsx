@@ -27,10 +27,10 @@ export async function loader({ request }: LoaderFunctionArgs) {
     data: { session },
   } = await supabase.auth.getSession();
 
-  if (session) {
-    // Redirect to the profile page if a session is active
-    return redirect("/profile");
-  }
+  // if (session) {
+  //   // Redirect to the profile page if a session is active
+  //   return redirect("/profile");
+  // }
 
   // Get environment variables to pass to the client
   const env = await getEnvironmentVariables();
