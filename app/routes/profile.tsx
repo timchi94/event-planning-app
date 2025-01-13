@@ -1,5 +1,5 @@
 import { useLoaderData } from "@remix-run/react";
-import { createServerClient } from "@supabase/ssr";
+import { createServerClient, parseCookieHeader } from "@supabase/ssr";
 import { type LoaderFunctionArgs } from "@remix-run/node";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
@@ -9,7 +9,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     {
       cookies: {
         getAll() {
-          return parse(request.headers.get("Cookie") ?? "");
+          return parseCookieHeader(request.headers.get("Cookie") ?? "");
         },
       },
     }
